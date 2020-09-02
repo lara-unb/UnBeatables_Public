@@ -1,0 +1,14 @@
+[Desktop Entry]
+Version=1.0
+Name=Monitor 2.8.5.10
+GenericName=Monitor 2.8.5.10
+Comment=Launches Monitor 2.8.5.10
+Icon=/opt/SoftbankRobotics/ChoregrapheSuite/share/monitor/icons/monitor.ico
+Exec="/opt/SoftbankRobotics/ChoregrapheSuite/bin/monitor-bin"
+Terminal=false
+Type=Application
+Categories=Development;Education;Science;
+Keywords=Robot Aldebaran Softbank Robotics NAO;
+Name[pt_BR]=Monitor 2.8.5.10
+Comment[pt_BR]=Monitoramento dos robôs da SoftBank Robotics
+

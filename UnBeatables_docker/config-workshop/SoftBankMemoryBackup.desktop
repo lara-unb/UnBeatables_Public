@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Name=Memory Backup 2.8.5.10
+GenericName=Memory Backup 2.8.5.10
+Comment=Launches Memory Backup 2.8.5.10
+Icon=/opt/SoftbankRobotics/ChoregrapheSuite/share/choregraphe/media/images/icons/_ico/MemoryBackup.ico
+Exec="/opt/SoftbankRobotics/ChoregrapheSuite/bin/memory_backup"
+Terminal=false
+Type=Application
+Categories=Development;Education;Science;
+Keywords=Robot Aldebaran Softbank Robotics NAO;
+Name[pt_BR]=Memory Backup 2.8.5.10
+Comment[pt_BR]=Cópia de segurança da memória dos robôs da SoftBank Robotics

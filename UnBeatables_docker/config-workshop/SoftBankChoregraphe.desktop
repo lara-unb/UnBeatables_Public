@@ -1,0 +1,14 @@
+[Desktop Entry]
+Version=1.0
+Name=Choregraphe 2.8.5.10
+GenericName=Choregraphe 2.8.5.10
+Comment=Launches Choregraphe 2.8.5.10
+Icon=/opt/SoftbankRobotics/ChoregrapheSuite/share/choregraphe/media/images/icons/_ico/Choregraphe.ico
+Exec="/opt/SoftbankRobotics/ChoregrapheSuite/bin/choregraphe_launcher"
+Terminal=false
+Type=Application
+Categories=Development;Education;Science;
+MimeType=application/x-choregraphe-pml;application/x-choregraphe-crg;
+Keywords=Robot Aldebaran Softbank Robotics NAO;
+Name[pt_BR]=Choregraphe 2.8.5.10
+Comment[pt_BR]=Aplicativo para simulação e programação dos Robôs da SoftBank Robotics

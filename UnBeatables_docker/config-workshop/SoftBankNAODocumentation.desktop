@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Name=NAO Documentation 2.8.5.10
+GenericName=NAO Documentation 2.8.5.10
+Comment=Opens the NAO Documentation
+Icon=/opt/SoftbankRobotics/ChoregrapheSuite/share/choregraphe/media/images/icons/_ico/Help.ico
+Exec=xdg-open "/opt/SoftbankRobotics/ChoregrapheSuite/share/doc/index.html"
+Terminal=false
+Type=Application
+Categories=Development;Education;Science;
+Keywords=Robot Aldebaran Softbank Robotics NAO;
+Name[pt_BR]=Documentação do NAO

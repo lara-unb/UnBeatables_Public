@@ -1,0 +1,65 @@
+# ==============================================================================
+# Este Dockerfile cria uma imagem base para uso da UnBeatables
+# ------------------------------------------------------------------------------
+# Este script foi baseado no Dockerfile desenvolvido pela ConSol Software GmbH
+# (https://github.com/ConSol/docker-headless-vnc-container)
+# ==============================================================================
+
+FROM ubuntu:18.04
+
+ENV   BUILD_DATE 2019-05-15
+LABEL Maintainer="Lívia Fonseca (liviagcf@gmail.com)" \
+      Description="Container Ubuntu Desktop Xfce com VNC"
+
+# Portas expostas para conexão
+# porta default VNC = 5901
+# conexão noVNC webport =  http://<IP>:6901/?password=vncpassword
+ENV DISPLAY=:1 \
+    VNC_PORT=5901 \
+    WS_PORT=6901
+
+# Variáveis de ambiente
+ENV HOME=/user \
+    INIT_DIR=/init \
+    INSTALL_SCRIPTS=/install \
+    DEBIAN_FRONTEND=noninteractive \
+    VNC_COL_DEPTH=24 \
+    VNC_RESOLUTION=1280x720 \
+    VNC_PASSWD=vncpassword \
+    VNC_VIEW_ONLY=false \
+    WS_HEARTBEAT=30
+
+WORKDIR $HOME
+
+#-- Inclui os scripts de instalação para os próximos passos
+ADD install $INSTALL_SCRIPTS/
+RUN find $INST_SCRIPTS -name '*.sh' -exec chmod a+x {} +
+
+#-- Define idioma padrão
+RUN apt-get -y -q update && apt-get -y -q install language-pack-pt-base locales --no-install-recommends && apt-get -y -q clean
+ENV LANG='pt_BR.UTF-8' LANGUAGE='pt_BR:pt:en' LC_ALL='pt_BR.UTF-8'
+
+#-- Instala pacotes básicos
+RUN $INSTALL_SCRIPTS/basics.sh 
+
+
+#-- Configura interface gráfica Xfce para o usuário
+RUN $INSTALL_SCRIPTS/xfce4.sh 
+ADD xfce/ $HOME/
+
+#-- Instala proxy websocket para uso do noVNC (HTML5 based VNC viewer)
+RUN $INSTALL_SCRIPTS/vncserver.sh 
+
+#-- Instala navegador mozilla firefox
+RUN $INSTALL_SCRIPTS/firefox.sh
+
+#-- configura inicialização do container
+RUN $INSTALL_SCRIPTS/libnss_wrapper.sh
+ADD scripts $INIT_DIR
+RUN $INSTALL_SCRIPTS/fix_permission.sh $INIT_DIR $HOME
+RUN rm -rf $INSTALL_SCRIPTS
+
+USER 1000
+
+ENTRYPOINT ["/init/startup.sh"]
+CMD ["--wait"]

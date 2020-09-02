@@ -1,0 +1,22 @@
+# ==============================================================================
+# Este Dockerfile cria um servidor WEB para uso no Workshop da UnBeatables
+# ==============================================================================
+FROM nginx:latest
+
+ENV   BUILD_DATE 2019-05-15
+LABEL Maintainer="Lívia Fonseca (liviagcf@gmail.com)" \
+      Description="Webserver para UnBeatables"
+
+COPY workshop-site.conf /etc/nginx/conf.d/workshop-site.conf
+RUN  rm -f /etc/nginx/conf.d/default.conf
+RUN  mkdir -p /init
+COPY startup.sh /init
+RUN  chmod +x /init/startup.sh
+
+VOLUME /var/www
+VOLUME /var/log
+
+EXPOSE 80
+
+ENTRYPOINT ["/init/startup.sh"]
+CMD [""]
