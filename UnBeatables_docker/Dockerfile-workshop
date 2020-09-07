@@ -7,7 +7,7 @@
 
 FROM unbeatables
 
-ENV   BUILD_DATE 2019-05-15
+ENV   BUILD_DATE 2019-05-16
 LABEL Maintainer="Lívia Fonseca (liviagcf@gmail.com)" \
       Description="Container 'unbeatables' com Softbank's Choregraphe Suite"
 
@@ -16,14 +16,14 @@ USER 0
 ARG CHOREGRAPHE
 
 ADD $CHOREGRAPHE $INSTALL_SCRIPTS/
+
 COPY choregraphe.sh $INSTALL_SCRIPTS
 COPY avahi.sh $INIT_DIR/startup.d/
 COPY *.desktop /usr/share/applications/
 
-RUN chmod a+x $INIT_DIR/startup.d/avahi.sh
+RUN chmod u+s $INIT_DIR/startup.d/avahi.sh
 RUN find $INSTALL_SCRIPTS -name '*.sh' -exec chmod a+x {} +
 RUN $INSTALL_SCRIPTS/choregraphe.sh
-
 RUN rm -f $INSTALL_SCRIPTS/*
 
 USER 1000

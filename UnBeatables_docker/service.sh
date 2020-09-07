@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# -------------------------------------------------------- #
+# Ativa e desativa os containers com base na lista de usu- #
+# ários.                                                   #
+# -------------------------------------------------------- #
+# TO DO: Melhorar o tratamento de opções e a estrutura do  #
+#        script.                                           #
+# -------------------------------------------------------- #
+
 CMD_STOP=""
 CMD_FORCE=""
 SELECT=""
@@ -37,10 +45,10 @@ process() {
         elif [ -n "${CMD_STOP}" ]; then
             echo "Desligando..."
             stop ${RUNNING}
-            continue
+            return
 	else
             echo "Será ignorado."
-            continue
+            return
         fi
     else
 	[ -n "${STOP}" ] && continue
@@ -56,9 +64,9 @@ WEBSERVER="$(docker ps -q -f=name=webserver)"
 [ -z "$WEBSERVER" ] && start_webserver
 
 while IFS=: read regs name; do
-    [ -z "${regs}" ] && continue
-    [[ "#" == "${regs:1:1}" ]] && continue 
-    [ -n "${SELECT}" ] && [[ "${regs}" != "${SELECT}" ]] && continue
+    [[ -z "${regs}" ]] && continue
+    [[ "${regs}" =~ ^#.*$ ]] && continue 
+    [[ -n "${SELECT}" ]] && [[ "${regs}" != "${SELECT}" ]] && continue
     process $regs $name
 done < service.db
 exit 0

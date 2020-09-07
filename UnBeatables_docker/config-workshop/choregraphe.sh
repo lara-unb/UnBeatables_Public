@@ -13,7 +13,8 @@ if [ ! -d "${CS_ARQ}" ]; then
 	echo "Choregraphe Suite não instalado"
 	exit 100
 fi
-[ -d "${CS_DIR}" ] || mkdir -p ${CS_DIR}
+[ -d "${CS_DIR}" ] || mkdir -vp ${CS_DIR}
+echo "Instalando '${CS_ARQ}' em '${CS_DIR}'. Aguarde..."
 mv -f -t ${CS_DIR} ${CS_ARQ}/* && rmdir ${CS_ARQ}
 
 # Corrige versao zlib (incompatibilidade entre a empacotada no software e a instalada na distro atual)

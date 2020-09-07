@@ -7,7 +7,7 @@
 
 FROM ubuntu:18.04
 
-ENV   BUILD_DATE 2019-05-15
+ENV   BUILD_DATE 2019-05-16
 LABEL Maintainer="Lívia Fonseca (liviagcf@gmail.com)" \
       Description="Container Ubuntu Desktop Xfce com VNC"
 
@@ -55,7 +55,7 @@ RUN $INSTALL_SCRIPTS/firefox.sh
 
 #-- configura inicialização do container
 RUN $INSTALL_SCRIPTS/libnss_wrapper.sh
-ADD scripts $INIT_DIR
+ADD startup $INIT_DIR
 RUN $INSTALL_SCRIPTS/fix_permission.sh $INIT_DIR $HOME
 RUN rm -rf $INSTALL_SCRIPTS
 

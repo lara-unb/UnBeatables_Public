@@ -3,7 +3,7 @@
 # ==============================================================================
 FROM nginx:latest
 
-ENV   BUILD_DATE 2019-05-15
+ENV   BUILD_DATE 2019-05-16
 LABEL Maintainer="Lívia Fonseca (liviagcf@gmail.com)" \
       Description="Webserver para UnBeatables"
 
