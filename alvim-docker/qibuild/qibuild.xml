@@ -1,0 +1,9 @@
+<qibuild version="1">
+  <defaults>
+    <env />
+    <cmake generator="Unix Makefiles" />
+    </defaults>
+  <worktree path="/nao">
+    <defaults />
+    </worktree>
+  </qibuild>

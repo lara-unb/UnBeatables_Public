@@ -1,0 +1,35 @@
+version: "3"
+
+services:
+
+  naoqi-sdk:
+    container_name: naoqi-sdk
+    image: alvimpaulo/naoqi-sdk:2.8.5
+    volumes:
+      - ${NAO_FOLDER_LOCATION}/workspace/:/nao/workspace/
+    ports:
+      - "${NAOQI_PORT}:9559"
+    environment:
+      - NAO_CODE_LOCATION=/nao/workspace/Unbeatables/v6_competitionCode
+    command: ["tail", "-f", "/dev/null"]
+
+  
+  naoqi-cpp:
+    container_name: naoqi-cpp
+    image: alvimpaulo/naoqi-cpp:2.8.5
+    volumes:
+      - ${NAO_FOLDER_LOCATION}/workspace/:/nao/workspace/
+
+  vrep:
+    container_name: vrep
+    image: alvimpaulo/vrep:4.1
+    network_mode: "host"
+    environment:
+      - "DISPLAY=unix$DISPLAY"
+      - "QT_X11_NO_MITSHM=1"
+    volumes:
+      - ${NAO_FOLDER_LOCATION}/workspace/:/nao/workspace/
+      - "${HOME}/.Xauthority:/root/.Xauthority:rw"
+      - "/tmp/.X11-unix:/tmp/.X11-unix:rw"
+    # command: bash
+

@@ -1,0 +1,5 @@
+numpy==1.16.6
+construct==2.10.54
+opencv-python==3.1.*
+Flask==1.1.2
+Flask-SocketIO==4.2.1
