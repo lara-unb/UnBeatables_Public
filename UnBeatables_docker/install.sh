@@ -1,6 +1,6 @@
 #!/bin/bash
 ################################################################################
-#      Prepara imagens de containers para uso nos workshops da UnBeatables     #
+#      Prepara imagens de containers para uso nos workshops da Unbeatables     #     
 ################################################################################
 # Conteúdo: Instala no Host os softwares noVNC e Docker
 #           Cria servidor web com Nginx
@@ -36,12 +36,12 @@ abort() {
 # Mensagem inicial do script
 # ============================================================================ #
 title() {
-    echo
+    echo 
     echo -e "\e[f\e[J\e[1;36m======================================================="
     echo -e "Instalação do ambiente para treinamentos da UnBeatables"
     echo -e "=======================================================\e[m"
     date
-    echo
+    echo 
 }
 
 # ============================================================================ #
@@ -69,7 +69,7 @@ spin() {
         i=$(( (i+1) %4 ))
 	local text=$@
 	[[ $_slow > 0 ]] && text="$text Pode demorar um pouco..."
-        echo -en "\r$text ${_spin_ch:$i:1}"
+        echo -en "\r$text ${_spin_ch:$i:1}" 
         sleep .1
     done
 }
@@ -84,7 +84,7 @@ proc_wait() {
     slower &
     _slowid="$!"
     spin $@ &
-    _spinid="$!"
+    _spinid="$!"   
     wait $_execid
     _excode=$?
     kill $_spinid 2> /dev/null
@@ -185,7 +185,7 @@ image_exists() {
 			exit 0
 		fi
 	fi
-}
+}	
 
 # ============================================================================ #
 # verifica se há containers das imagens a serem sobrescritas e encerra-os
@@ -196,7 +196,7 @@ container_running() {
 	if  [[ -n "${_RUNNING}" ]]; then
 		msg_warn "Há containers da imagem \e[1;35m${_DOCKER_BASE}\e[m ou derivadas em execução."
 		read -p "Cancela (S/n)? " -i "S" -N 1 resp
-		echo
+		echo 
 		if [[ "${resp}" == @(N|n) ]]; then
 			echo "Finalizando script."
 			exit 0
@@ -206,7 +206,7 @@ container_running() {
 		pid=$!
 		proc_wait $pid "Encerrando containers em execução..."
 	fi
-}
+}	
 
 # ============================================================================ #
 # atualiza Dockerfile com as informacoes deste build
@@ -226,11 +226,12 @@ update_dockerfile() {
 # instala e configura noVNC (HTML5 base VNC viewer)
 # ============================================================================ #
 install_noVNC() {
-    [ -d "$INST_WWW_DIR/noVNC" ] || mkdir -p $INST_WWW_DIR/noVNC &>> $INST_LOGFILE
+    [ -d "$INST_WWW_DIR/noVNC" ] || mkdir -vp $INST_WWW_DIR/noVNC &>> $INST_LOGFILE
     wget -qO- https://github.com/novnc/noVNC/archive/v1.1.0.tar.gz | tar xz --strip 1 -C $INST_WWW_DIR/noVNC &>> $INST_LOGFILE
     chmod +x -v $INST_WWW_DIR/noVNC/utils/*.sh &>> $INST_LOGFILE
     cp -v $INST_SRC_DIR/*.html $INST_WWW_DIR/noVNC &>> $INST_LOGFILE
     cp -v $INST_SRC_DIR/pt.json $INST_WWW_DIR/noVNC/app/locale &>> $INST_LOGFILE
+    [ -d "/var/log/nginx" ] || mkdir -vp /var/log/nginx &>> $INST_LOGFILE
 }
 
 # ============================================================================ #

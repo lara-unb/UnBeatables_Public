@@ -73,7 +73,11 @@ LOG_DIR="$INIT_DIR"
 if [ -d $INIT_DIR/startup.d ]; then
   for service in $INIT_DIR/startup.d/*.sh; do
     if [ -r $service ]; then
-      . $service
+	if [[ $(stat -c "%a" $service) -gt 4000 ]]; then
+            exec-suid $service
+        else
+            exec $service
+        fi
     fi
   done
   unset service
