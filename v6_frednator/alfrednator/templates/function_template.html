@@ -1,0 +1,37 @@
+{% extends 'index.html' %} {% block functionSelection %}
+<li>
+  <div class="collapsible-header">
+    <span>{{perception_function.__name__}}</span>
+  </div>
+  <div class="collapsible-body">
+    <div class="collapsible-body-grid">
+      <div class="debug-image-index-div">
+        <label>
+          <input
+            name="{{perception_function.__name__}}-debug-image-index-selector"
+            type="radio"
+            checked
+          />
+          <span>0</span>
+        </label>
+      </div>
+      <div class="parameters-div">
+        <form>
+          {% for parameter_key in perception_function.params_2_alfrednator%}
+          <div class="input-field">
+            <input
+              value="{{perception_function|attr(parameter_key)}}"
+              id="{{parameter_key}}-{{perception_function.__name__}}"
+              type="text"
+            />
+            <label for="{{parameter_key}}-{{perception_function.__name__}}"
+              >{{parameter_key}}</label
+            >
+          </div>
+          {% endfor %}
+        </form>
+      </div>
+    </div>
+  </div>
+</li>
+{% endblock %}

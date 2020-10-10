@@ -1,0 +1,15 @@
+<div id="source-{{source_number}}" class="col s12">
+  <canvas
+    id="video-feed-canvas-{{path}}"
+    width="640"
+    height="480"
+    style="width: 100%;"
+  ></canvas>
+  <div class="col s3">
+    <a
+      class="waves-effect waves-light btn"
+      onclick="stop_capture(this, '{{path}}', '{{source_number}}')"
+      >Stop Source</a
+    >
+  </div>
+</div>

@@ -1,0 +1,208 @@
+<html>
+  <head>
+    <title>Alfrednator</title>
+
+    <!--Import Google Icon Font-->
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <!--Import materialize.css-->
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="{{url_for('static', filename='css/materialize.css')}}"
+      media="screen,projection"
+    />
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+    <link
+      rel="stylesheet"
+      href="{{url_for('static', filename='css/grid.css')}}"
+    />
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="grid-container">
+        <div class="main-grid-header">
+          <div class="row valign-wrapper">
+            <div class="file-field input-field col s2">
+              <div class="btn">
+                <span>File</span>
+                <input type="file" accept=".mp4,.mkv,.avi" />
+              </div>
+            </div>
+            <div class="input-field col s5">
+              <input id="ip-selector-1" type="text" class="validate" />
+              <label for="ip-selector-1">Ip/Index</label>
+            </div>
+            <div class="col s3">
+              <a
+                class="waves-effect waves-light btn-small"
+                onclick="start_capture(document.querySelector('#ip-selector-1').value)"
+                >Camera/Ip</a
+              >
+              <br />
+              <a
+                style="margin-top: 1vh;"
+                class="waves-effect waves-light btn-small"
+                onclick="start_robot_capture('robot-' + document.querySelector('#ip-selector-1').value)"
+                >Robot</a
+              >
+
+              <a
+              style="margin-top: 1vh;"
+              class="waves-effect waves-light btn-small"
+              onclick="start_vrep_capture('vrep-' + document.querySelector('#ip-selector-1').value)"
+              >Vrep</a
+            >
+            </div>
+            <div class="input-field col s2">
+              <select id="fps-select">
+                <option value="30">30</option>
+                <option value="20">20</option>
+                <option value="15" selected>15</option>
+                <option value="10">10</option>
+                <option value="5">5</option>
+              </select>
+              <label>Fps Control</label>
+            </div>
+          </div>
+        </div>
+        <div class="main-grid-main">
+          <div class="row" style="width: 50vw;">
+            <div class="col s12">
+              <ul class="tabs" id="main-tabs"></ul>
+            </div>
+            <div id="source-content"></div>
+          </div>
+        </div>
+        <div
+          class="main-grid-sidebar"
+          style="justify-self: center; text-align: center;"
+        >
+          <div id="function-selector-div" class="function-selection">
+            <ul class="collapsible popout">
+              {% for perception_function in perception_functions%}
+
+              <li>
+                <div class="collapsible-header">
+                  <span>{{perception_function.__name__}}</span>
+                </div>
+                <div class="collapsible-body">
+                  <div class="collapsible-body-grid">
+                    <div class="debug-image-index-div"></div>
+                    <div class="parameters-div">
+                      <form>
+                        {% for parameter_key, parameter_type in
+                        perception_function.params_2_alfrednator.items()%} {%if
+                        parameter_type == "number" %}
+                        <div class="input-field">
+                          <input
+                            value="{{perception_function|attr(parameter_key)}}"
+                            id="{{parameter_key}}-{{perception_function.__name__}}"
+                            type="text"
+                            onchange="param_change(this, 'number')"
+                          />
+                          <label
+                            for="{{parameter_key}}-{{perception_function.__name__}}"
+                            >{{parameter_key}}</label
+                          >
+                        </div>
+                        {%elif parameter_type == "bool"%}
+                        <label>
+                          <input type="checkbox" {%if
+                          perception_function|attr(parameter_key) == True%}
+                          checked="checked" {%endif%}
+                          onchange="param_change(this, 'bool')"/>
+                          <span>{{parameter_key}}</span>
+                        </label>
+                        {%endif%} {% endfor %}
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </li>
+
+              {%endfor%}
+            </ul>
+          </div>
+
+          <!-- split canvas trigger -->
+          <a class="waves-effect waves-light btn" onclick="split_modal()"
+            >Split canvas</a
+          >
+
+          <!-- Modal Structure -->
+          <div id="modal-split-canvas" class="modal">
+            <div class="modal-content" style="height: 80vh;">
+              <div class="input-field col s12">
+                <select multiple>
+                  <option value="" disabled selected>Select sources</option>
+                </select>
+                <label>Source Selection</label>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <a
+                href="#!"
+                class="modal-close waves-effect waves-green btn-flat"
+                onclick="split_canvas(M.FormSelect.getInstance(document.querySelector('#modal-split-canvas select')).getSelectedValues())"
+                >Create split</a
+              >
+            </div>
+          </div>
+        </div>
+        <div class="main-grid-footer">
+          <div class="row valign-wrapper">
+            <div class="input-field col s6">
+              <input id="recording-name" type="text" class="validate" />
+              <label for="recording-name">Recording name</label>
+            </div>
+            <div class="col s6" id="record-buttons">
+              <a
+                class="waves-effect waves-light btn"
+                onclick="recording_video_modal()"
+                >Record</a
+              >
+            </div>
+
+            <!-- Modal Structure -->
+            <div id="record-video-modal" class="modal">
+              <div class="modal-content" style="height: 60vh;">
+                <div class="input-field col s12">
+                  <select>
+                    <option value="" disabled selected>Select sources</option>
+                  </select>
+                  <label>Source Selection</label>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <a
+                  href="#!"
+                  class="modal-close waves-effect waves-green btn-flat"
+                  onclick="start_record_video(document.querySelector('#record-video-modal select').value, 
+                  document.querySelector('#recording-name').value)"
+                  >Start recording</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="{{url_for('static', filename='js/jquery.js')}}"></script>
+    <!--JavaScript at end of body for optimized loading-->
+    <script src="{{url_for('static', filename='js/materialize.js')}}"></script>
+    <script src="{{url_for('static', filename='js/socket.io.js')}}"></script>
+
+    <script src="{{url_for('static', filename='js/init.js')}}"></script>
+  </body>
+</html>
