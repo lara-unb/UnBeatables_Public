@@ -1,0 +1,66 @@
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  /* grid-template-rows: 1fr 1fr 1fr 1fr 1fr; */
+  grid-template-areas: "main-grid-header main-grid-header main-grid-header main-grid-header" "main-grid-main main-grid-main main-grid-main main-grid-sidebar" "main-grid-main main-grid-main main-grid-main main-grid-sidebar" "main-grid-main main-grid-main main-grid-main main-grid-sidebar" "main-grid-footer main-grid-footer main-grid-footer main-grid-footer";
+  height: 100vh;
+}
+
+.main-grid-header {
+  grid-area: main-grid-header;
+  margin-top: 3vh;
+  text-align: center;
+}
+
+.main-grid-main {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+  grid-template-areas: ".";
+  grid-area: main-grid-main;
+  justify-self: center;
+}
+
+.main-grid-main img {
+  height: 100%;
+}
+
+.main-grid-sidebar {
+  grid-area: main-grid-sidebar;
+}
+
+.main-grid-footer {
+  grid-area: main-grid-footer;
+}
+
+.source-content {
+  display: none;
+}
+
+.source-content--active {
+  display: block;
+}
+
+.function-selection {
+  grid-area: function-selection;
+  justify-self: stretch;
+}
+
+.parameters-div {
+  display: grid;
+  grid-template-columns: 80%;
+  justify-items: center;
+  align-items: center;
+}
+
+.collapsible-body-grid {
+  display: grid;
+  grid-template-rows: 1fr;
+}
+
+.debug-image-index-div {
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-auto-flow: column;
+  overflow-x: auto;
+}

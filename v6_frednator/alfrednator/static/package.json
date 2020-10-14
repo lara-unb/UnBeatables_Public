@@ -1,0 +1,30 @@
+{
+  "name": "alfred",
+  "version": "1.0.0",
+  "description": "Interface grafica para o desenvolvimento no NAO v6 da equipe UnBeatables",
+  "main": "alfred.py",
+  "scripts": {
+    "start": "webpack-dev-server",
+    "build": "webpack -p --progress --config webpack.config.js",
+    "dev-build": "webpack --progress -d --config webpack.config.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "webpack --progress -d --config webpack.config.js --watch"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "jquery": "^3.4.1",
+    "material-components-web": "^4.0.0",
+    "materialize-css": "^1.0.0-rc.2"
+  },
+  "devDependencies": {
+    "css-loader": "^3.2.0",
+    "extract-loader": "^3.1.0",
+    "file-loader": "^4.2.0",
+    "node-sass": "^4.13.1",
+    "sass-loader": "^8.0.0",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.9.0"
+  }
+}
