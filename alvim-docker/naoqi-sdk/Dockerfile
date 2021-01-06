@@ -16,4 +16,4 @@ RUN wget -c https://gist.githubusercontent.com/alvimpaulo/2995da9628e7bb17e99513
 RUN qitoolchain create v6-sdk /nao/devtools/naoqi-sdk-2.8.5.10-linux64/toolchain.xml
 RUN cd /nao/ && qibuild add-config v6-sdk -t v6-sdk --default
 
-CMD [ "/nao/devtools/naoqi-sdk-2.8.5.10-linux64/naoqi" ]
+CMD [ "/nao/devtools/naoqi-sdk-2.8.5.10-linux64/naoqi --disable-life" ]

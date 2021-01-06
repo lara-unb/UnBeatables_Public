@@ -35,16 +35,20 @@ if os.name != "nt":
 # docker run a container
 if(args.operation == "run"):
     if(args.container_name == "vrep"):
-        subprocess.call('{} docker run --rm --net=host --env="DISPLAY" -d --name vrep --volume="$HOME/.Xauthority:/root/.Xauthority:rw" -v "{}/workspace/:/nao/workspace/"  alvimpaulo/vrep:4.1'.format(cmd_prefix, nao_folder_location), shell=True)
+        subprocess.call('{} docker run --rm -d --net=host --env="DISPLAY" --volume="$HOME/.Xauthority:/root/.Xauthority:rw" -v "{}/workspace/:/nao/workspace/" --name vrep  alvimpaulo/vrep:4.1'.format(cmd_prefix, nao_folder_location), shell=True)
     elif(args.container_name == "naoqi-sdk"):
-        subprocess.call(
-            '{} docker run --rm -p 9600:9559 -e NAO_CODE_LOCATION="/nao/workspace/UnBeatables/v6_competitionCode/" -d -v "{}/workspace/:/nao/workspace/"  -v /dev/:/dev/ --name naoqi-sdk alvimpaulo/naoqi-sdk:2.8.5'.format(cmd_prefix, nao_folder_location), shell=True)
+        for idx in range(2) :
+            subprocess.call(
+                '{} docker run --rm -d --net=host -e NAO_CODE_LOCATION="/nao/workspace/UnBeatables/v6_competitionCode/" -v "{}/workspace/:/nao/workspace/"  -v /dev/:/dev/ --name naoqi-sdk-{} alvimpaulo/naoqi-sdk:2.8.5 /nao/devtools/naoqi-sdk-2.8.5.10-linux64/naoqi -v --disable-life -p {}'.format(cmd_prefix, nao_folder_location, idx, (9600+idx)), shell=True)
     elif(args.container_name == "choregraph"):
         subprocess.call(
             '{} docker run --rm -d --net=host --env="DISPLAY" --volume="$HOME/.Xauthority:/root/.Xauthority:rw" --name choregraph alvimpaulo/choregraph:2.8.6'.format(cmd_prefix), shell=True)
     elif(args.container_name == "naoqi-python-sdk"):
         subprocess.call(
             '{} docker run --rm -e NAO_CODE_LOCATION="/nao/workspace/UnBeatables/v6_competitionCode/" -d -v "{}/workspace/:/nao/workspace/"  -v /dev/:/dev/ --name naoqi-python-sdk alvimpaulo/naoqi-python-sdk:2.8.5'.format(cmd_prefix, nao_folder_location), shell=True)
+    elif(args.container_name == "choregraphe"):
+        subprocess.call(
+            '{} docker run --rm --env="DISPLAY" --net=host --volume="$HOME/.Xauthority:/root/.Xauthority:rw" -v "{}/workspace/:/nao/workspace/" --name choregraphe  alvimpaulo/choregraphe:2.8.6'.format(cmd_prefix, nao_folder_location), shell=True)
 
     else:
         subprocess.call('{} docker run --rm -d -v "{}/workspace/:/nao/workspace/" --name {} alvimpaulo/{}:2.8.5'.format(
