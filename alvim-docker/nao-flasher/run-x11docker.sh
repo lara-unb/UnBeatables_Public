@@ -1,1 +1,1 @@
-x11docker --hostdisplay --user=RETAIN --xpra --clipboard  --share "/home/paulo/nao/NaoDevilsImage/nao-2.8.5.11_ROBOCUP_ONLY_with_root.opn" -- --rm --device=/dev/sdc  -- alvimpaulo/nao-flasher
+x11docker --hostdisplay --user=RETAIN  --clipboard --share $1 -- --rm --privileged --device=$2  -- alvimpaulo/nao-flasher
